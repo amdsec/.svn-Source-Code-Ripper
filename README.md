@@ -2,4 +2,13 @@
 Apache Subversion Source Code Ripper
 
 
-Apache SVN exposes /.svn/wc.db SQLite file which contains checksums for each file in the repository, the source code can be accessed by accessing `/.svn/pristine/(first two letters of checksum)/(checksum).svn-base`, this scripts scrapes all of the checksums and recompiles the source code from the site. 
+Apache SVN exposes /.svn/wc.db SQLite file.
+This file contains an index of files within SVN, filename, location and checksum.
+SVN stores the source code for these files in  `/.svn/pristine/`.
+You can access these files by using the sha1 checksum inside the SQLLite database file. 
+`/.svn/pristine/(first two letters of checksum)/(checksum).svn-base`
+
+This scripts iterates over all of the checksums and filenames within the database to recompile the source code of the target website.
+
+
+Use responsibily.
