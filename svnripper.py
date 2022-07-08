@@ -13,7 +13,6 @@ dbftd = 'https://' + sitename + '/.svn/wc.db'
 with open(dbfile, "wb") as f:
   db = requests.get(dbftd)
   f.write(db.content)
-  f.close()
 sn1 = 'https://' + dbfile.split('/')[0]
 con = sqlite3.connect(dbfile)
 
