@@ -3,17 +3,18 @@ import sqlite3
 import tarfile
 import requests
 import os.path
+from sys import argv
+scriptname,sitename = argv
 
 # Blacklisted file types
 blacklist = ['.css', '.scss', '.js', '.html', '.img', '.png', '.jpg', '.jpeg', '.gif', '.tff', '.otf', '.svg', '.ico']
-sitename = input('site (example.com): ')
 os.makedirs(sitename)
 dbfile = sitename + '/wc.db'
 dbftd = 'https://' + sitename + '/.svn/wc.db'
 with open(dbfile, "wb") as f:
   db = requests.get(dbftd)
   f.write(db.content)
-sn1 = 'https://' + dbfile.split('/')[0]
+sn1 = 'https://' + sitename
 con = sqlite3.connect(dbfile)
 
 # Initialize SQLite Connection
@@ -32,8 +33,8 @@ print("Columns in NODES: ")
 print(comms)
 print('\n')
 
-
-rt1 = con.execute('select repos_path, checksum from NODES')
+# Extract checksum, repos_path.
+rt1 = con.execute('select repos_path, checksum from NODES where checksum is not NULL')
 rt = rt1.fetchall()
 print("Total number of files: " + str(len(rt)) + '\n')
 
